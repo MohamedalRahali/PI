@@ -1,0 +1,6 @@
+{
+    "require": {
+        "symfony/webpack-encore-bundle": "^2.2",
+        "symfony/asset": "^7.2"
+    }
+}
