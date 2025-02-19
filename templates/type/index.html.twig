@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+<<<<<<< HEAD
+{% block title %}T index{% endblock %}
+
+{% block body %}
+    <h1>T index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Desc_event</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for t in ts %}
+            <tr>
+                <td>{{ t.id }}</td>
+                <td>{{ t.name }}</td>
+                <td>{{ t.descEvent }}</td>
+                <td>
+                    <a href="{{ path('app_type_show', {'id': t.id}) }}">show</a>
+                    <a href="{{ path('app_type_edit', {'id': t.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_type_new') }}">Create new</a>
+=======
+{% block title %}Gestion des Types{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+
+    <div class="row mt-4">
+        <!-- Sidebar -->
+        <div class="col-md-2 sidebar">
+            <h4>Navigation</h4>
+            <ul class="list-unstyled">
+                <li><a href="{{ path('evenment_index') }}" class="btn btn-outline-secondary w-100 mb-3">
+                    <i class="fas fa-list"></i> All Events</a>
+                </li>
+                <li><a href="{{ path('evenment_new') }}" class="btn btn-outline-secondary w-100 mb-3">
+                    <i class="fas fa-plus-circle"></i> Create Event</a>
+                </li>
+                <li><a href="#" class="btn btn-outline-secondary w-100 mb-3">
+                    <i class="fas fa-user"></i> My Events</a>
+                </li>
+                <li><a href="{{ path('app_type_new') }}" class="btn btn-outline-secondary w-100 mb-3">
+                    <i class="fas fa-plus-circle"></i> Create Type Event</a>
+                </li>
+                <li><a href="{{ path('app_type_index') }}" class="btn btn-outline-secondary w-100 mb-3">
+                    <i class="fas fa-list"></i> Show Type Events</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-10 main-content">
+            <div class="container mt-5">
+                <div class="card shadow-sm p-4">
+                    <h1 class="mb-4 text-center text-primary" style="font-size: 1.75rem;">
+                        <i class="fas fa-list"></i> Liste des Types
+                    </h1>
+
+                    <table class="table table-hover text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for t in ts %}
+                            <tr>
+                                <td>{{ t.id }}</td>
+                                <td class="fw-bold text-info">{{ t.name }}</td>
+                                <td>{{ t.descEvent }}</td>
+                                <td>
+                                    <a href="{{ path('app_type_edit', {'id': t.id}) }}" class="btn btn-warning btn-sm me-2" title="Modifier">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form method="post" action="{{ path('app_type_delete', {'id': t.id}) }}" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ t.id) }}">
+                                        <button type="submit" class="btn btn-danger btn-sm" title="Supprimer">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="4" class="text-muted">Aucun enregistrement trouvé.</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="text-center mt-4">
+                        <a href="{{ path('app_type_new') }}" class="btn btn-success px-4 py-2">
+                            <i class="fas fa-plus-circle"></i> Créer un nouveau type
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JS dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+>>>>>>> cd5b4cd (crud tout en marche)
+{% endblock %}

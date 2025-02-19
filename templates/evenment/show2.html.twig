@@ -1,0 +1,87 @@
+{% extends 'evenment/baseevenement2.html.twig' %}
+
+{% block title %}Evenment Details{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4">
+            <h1 class="mb-4 text-center text-primary">
+                <i class="fas fa-calendar-alt"></i> Détails de l'événement
+            </h1>
+
+            <div class="evenment-details">
+                <p><strong><i class="fas fa-calendar-day"></i> Date:</strong> {{ evenment.date|date('Y-m-d') }}</p>
+                <p><strong><i class="fas fa-info-circle"></i> Description:</strong> {{ evenment.description }}</p>
+                <p><strong><i class="fas fa-map-marker-alt"></i> Lieux:</strong> {{ evenment.lieux }}</p>
+
+                <p><strong><i class="fas fa-clock"></i> Durée:</strong> {{ evenment.duree }}</p>
+
+                <p><strong><i class="fas fa-users"></i> Nombre de places disponibles:</strong> {{ evenment.nbPlaceDispo }}</p>
+
+                <p><strong><i class="fas fa-flag-checkered"></i> Statut:</strong>
+                    <span class="badge rounded-pill text-white 
+                        {% if evenment.status == 'Pending' %} bg-warning
+                        {% elseif evenment.status == 'Confirmed' %} bg-success
+                        {% elseif evenment.status == 'Cancelled' %} bg-danger
+                        {% else %} bg-secondary
+                        {% endif %}">
+                        {{ evenment.status ?? 'Pending' }}
+                    </span>
+                </p>
+
+                {# Affichage des types d'événements associés #}
+                <p><strong><i class="fas fa-tag"></i> Type(s) d'événement:</strong>
+                    {% if evenment.types is not empty %}
+                        <ul>
+                            {% for type in evenment.types %}
+                                <li>{{ type.name }} - {{ type.descEvent }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        Aucun type d'événement associé.
+                    {% endif %}
+                </p>
+            </div>
+
+           
+
+            <a href="{{ path('evenment_x') }}" class="back-link mt-4 d-block text-center">
+                <i class="fas fa-arrow-left"></i> Retour à la liste
+            </a>
+        </div>
+    </div>
+
+    {# Ajout des styles personnalisés #}
+    <style>
+        .table-hover tbody tr:hover {
+            background-color: rgba(0, 123, 255, 0.1);
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .card {
+            border-radius: 10px;
+        }
+
+        .badge {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .back-link {
+            color: #007bff;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .form-container .d-flex {
+            margin-top: 20px;
+        }
+    </style>
+
+    {# Ajout de FontAwesome pour les icônes #}
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}

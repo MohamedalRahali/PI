@@ -1,0 +1,111 @@
+{% extends 'evenment/baseevenement2.html.twig' %}
+
+{% block title %}Evenments{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card shadow-sm p-3" style="max-width: 800px; margin: 0 auto;">
+            <h1 class="mb-3 text-center text-primary" style="font-size: 1.75rem;">
+                <i class="fas fa-calendar-alt" style="font-size: 2rem;"></i> Liste des Événements
+            </h1>
+
+            <div class="evenment-list">
+                <ul class="list-group">
+                    {% for evenment in evenments %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <!-- Nom de l'événement avec gestion du débordement -->
+                            <a href="{{ path('evenment_show2', {'id': evenment.id}) }}" class="text-decoration-none" style="flex-grow: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                <i class="fas fa-calendar-day" style="font-size: 1.5rem;"></i> {{ evenment.title }}
+                            </a>
+
+                            <!-- Date centrée -->
+                            <div class="d-flex justify-content-center flex-grow-1">
+                                <span class="badge badge-pill badge-info" style="font-size: 1rem; background-color: #17a2b8; color: white;">
+                                    <i class="fas fa-clock" style="font-size: 1rem;"></i> {{ evenment.date|date('Y-m-d') }}
+                                </span>
+                            </div>
+
+                            
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+           
+        </div>
+    </div>
+
+    {# Ajout de styles personnalisés #}
+    <style>
+        .list-group-item {
+            font-size: 18px;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .list-group-item a {
+            color: #007bff;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .list-group-item a:hover {
+            text-decoration: underline;
+        }
+
+        .badge {
+            font-size: 14px;
+        }
+
+        .btn-success {
+            font-size: 18px;
+            text-align: center;
+            padding: 12px 24px;
+        }
+
+        .btn-success i {
+            margin-right: 10px;
+        }
+
+        .d-flex {
+            display: flex;
+            align-items: center;
+        }
+
+        .me-2 {
+            margin-right: 8px;
+        }
+
+        .list-group {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Centrage de la date */
+        .d-flex.justify-content-center {
+            text-align: center;
+        }
+
+        /* Style amélioré des boutons */
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .badge-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+    </style>
+
+    {# Ajout de FontAwesome pour les icônes #}
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}

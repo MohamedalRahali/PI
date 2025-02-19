@@ -1,0 +1,205 @@
+{% extends 'evenment/baseevenement.html.twig' %}
+
+{% block title %}Create Evenment{% endblock %}
+
+{% block head %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+
+<style>
+    /* Styling for duration fields */
+    .duration-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .duration-container select {
+        width: auto;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background-color: #f8f9fa;
+        font-size: 16px;
+    }
+
+    .duration-container label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<h1>Create a new Evenment</h1>
+
+<div class="form-container">
+    {{ form_start(form, { 'attr': {'onsubmit': 'return validateForm()'} }) }}
+        <!-- Title -->
+        <div class="form-group">
+            <label for="title">
+                <i class="fas fa-heading"></i> Title of the event
+            </label>
+            {{ form_widget(form.title, { 'attr': {'class': 'form-control', 'oninput': 'validateField(this)', 'data-min-length': 4} }) }}
+            <div class="valid-feedback">✅ Correct</div>
+            <div class="invalid-feedback">❌ Title must be at least 5 characters long</div>
+        </div>
+
+        <!-- Date -->
+        <div class="form-group">
+            <label for="date">
+                <i class="fas fa-calendar-day"></i> Event Date
+            </label>
+            {{ form_widget(form.date, { 'attr': {'class': 'form-control', 'oninput': 'validateDate(this)'} }) }}
+            <div class="valid-feedback">✅ Correct</div>
+            <div class="invalid-feedback">❌ The date must be at least 2 days in the future</div>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+            <label for="description">
+                <i class="fas fa-info-circle"></i> Description
+            </label>
+            {{ form_widget(form.description, { 'attr': {'class': 'form-control', 'oninput': 'validateField(this)', 'data-min-length': 4} }) }}
+            <div class="valid-feedback">✅ Correct</div>
+            <div class="invalid-feedback">❌ Description must be at least 5 characters long</div>
+        </div>
+
+        <!-- Location -->
+        <div class="form-group">
+            <label for="lieux">
+                <i class="fas fa-map-marker-alt"></i> Location
+            </label>
+            {{ form_widget(form.lieux, { 'attr': {'class': 'form-control', 'id': 'location-input'} }) }}
+            <div class="valid-feedback">✅ Correct</div>
+            <div class="invalid-feedback">❌ Location must be at least 5 characters long</div>
+        </div>
+
+        <div id="map"></div>
+
+        <!-- Event Status -->
+        <div class="form-group">
+            <label for="status">
+                <i class="fas fa-flag"></i> Event Status
+            </label>
+            {{ form_widget(form.status, { 'attr': {'class': 'form-control'} }) }}
+            <div class="valid-feedback">✅ Correct</div>
+            <div class="invalid-feedback">❌ {{ form_errors(form.status) }}</div>
+        </div>
+
+        <!-- Event Types -->
+        <div class="form-group">
+            <label for="types">
+                <i class="fas fa-list"></i> Event Types
+            </label>
+            {{ form_widget(form.types, { 'attr': {'class': 'form-control'} }) }}
+            <div class="valid-feedback">✅ Correct</div>
+            <div class="invalid-feedback">❌ {{ form_errors(form.types) }}</div>
+        </div>
+
+        <!-- Duration -->
+        <div class="form-group">
+            <label for="duree">
+                <i class="fas fa-clock"></i> Event Duration
+            </label>
+            <div class="duration-container">
+                {{ form_widget(form.duree, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="valid-feedback">✅ Correct</div>
+            <div class="invalid-feedback">❌ Please select a valid duration</div>
+        </div>
+
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    {{ form_end(form) }}
+</div>
+
+<a href="{{ path('evenment_index') }}" class="back-link">
+    <i class="fas fa-arrow-left"></i> Back to list
+</a>
+
+<script>
+    function validateField(field) {
+        const minLength = field.getAttribute('data-min-length');
+        if (field.value.length > minLength) {
+            field.classList.remove('is-invalid');
+            field.classList.add('is-valid');
+        } else {
+            field.classList.remove('is-valid');
+            field.classList.add('is-invalid');
+        }
+    }
+
+    function validateDate(field) {
+        const dateValue = new Date(field.value);
+        const today = new Date();
+        today.setDate(today.getDate() + 2); // Add 2 days to the current date
+
+        if (dateValue >= today) {
+            field.classList.remove('is-invalid');
+            field.classList.add('is-valid');
+        } else {
+            field.classList.remove('is-valid');
+            field.classList.add('is-invalid');
+        }
+    }
+
+    function validateForm() {
+        const fields = document.querySelectorAll('[data-min-length]');
+        let isValid = true;
+        fields.forEach(field => {
+            validateField(field);
+            if (field.classList.contains('is-invalid')) {
+                isValid = false;
+            }
+        });
+
+        const dateField = document.querySelector('[name="form[date]"]');
+        validateDate(dateField);
+        if (dateField.classList.contains('is-invalid')) {
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    function initMap() {
+        const map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 37.7749, lng: -122.4194 }, // Default to San Francisco
+            zoom: 12
+        });
+
+        const input = document.getElementById('location-input');
+        const autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.bindTo('bounds', map);
+
+        const marker = new google.maps.Marker({
+            map: map,
+            anchorPoint: new google.maps.Point(0, -29)
+        });
+
+        autocomplete.addListener('place_changed', function () {
+            marker.setVisible(false);
+            const place = autocomplete.getPlace();
+            if (!place.geometry) {
+                window.alert("No details available for input: '" + place.name + "'");
+                return;
+            }
+
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+            } else {
+                map.setCenter(place.geometry.location);
+                map.setZoom(17);
+            }
+            marker.setPosition(place.geometry.location);
+            marker.setVisible(true);
+        });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initMap);
+</script>
+{% endblock %}
