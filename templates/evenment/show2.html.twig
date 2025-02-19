@@ -1,4 +1,4 @@
-{% extends 'evenment/baseevenement.html.twig' %}
+{% extends 'evenment/baseevenement2.html.twig' %}
 
 {% block title %}Evenment Details{% endblock %}
 
@@ -43,22 +43,9 @@
                 </p>
             </div>
 
-            <div class="form-container mt-4">
-                <div class="d-flex justify-content-between">
-                    <a href="{{ path('evenment_edit', {'id': evenment.id}) }}" class="btn btn-sm btn-primary">
-                        <i class="fas fa-edit"></i> Modifier
-                    </a>
+           
 
-                    <form action="{{ path('evenment_delete', {'id': evenment.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ?');" style="display:inline;">
-                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ evenment.id) }}">
-                        <button type="submit" class="btn btn-sm btn-danger">
-                            <i class="fas fa-trash"></i> Supprimer
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <a href="{{ path('evenment_index') }}" class="back-link mt-4 d-block text-center">
+            <a href="{{ path('evenment_x') }}" class="back-link mt-4 d-block text-center">
                 <i class="fas fa-arrow-left"></i> Retour à la liste
             </a>
         </div>

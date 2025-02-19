@@ -1,4 +1,4 @@
-{% extends 'evenment/baseevenement.html.twig' %}
+{% extends 'evenment/baseevenement2.html.twig' %}
 
 {% block title %}Evenments{% endblock %}
 
@@ -14,7 +14,7 @@
                     {% for evenment in evenments %}
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <!-- Nom de l'événement avec gestion du débordement -->
-                            <a href="{{ path('evenment_show', {'id': evenment.id}) }}" class="text-decoration-none" style="flex-grow: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                            <a href="{{ path('evenment_show2', {'id': evenment.id}) }}" class="text-decoration-none" style="flex-grow: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
                                 <i class="fas fa-calendar-day" style="font-size: 1.5rem;"></i> {{ evenment.title }}
                             </a>
 
@@ -25,26 +25,13 @@
                                 </span>
                             </div>
 
-                            <!-- Boutons de modification et suppression avec un design amélioré -->
-                            <div class="d-flex">
-                                <a href="{{ path('evenment_edit', {'id': evenment.id}) }}" class="btn btn-sm btn-warning me-2" title="Modifier" style="font-size: 1.25rem; color: white; background-color: #ffc107;">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form action="{{ path('evenment_delete', {'id': evenment.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ?');" style="display:inline;">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ evenment.id) }}">
-                                    <button type="submit" class="btn btn-sm btn-danger" title="Supprimer" style="font-size: 1.25rem; color: white; background-color: #dc3545;">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
+                            
                         </li>
                     {% endfor %}
                 </ul>
             </div>
 
-            <a href="{{ path('evenment_new') }}" class="btn btn-success mt-4 d-block mx-auto" style="font-size: 1.25rem; padding: 12px 24px;">
-                <i class="fas fa-plus-circle" style="font-size: 1.5rem;"></i> Créer un nouvel événement
-            </a>
+           
         </div>
     </div>
 

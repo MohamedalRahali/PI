@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TRepository::class)]
@@ -18,9 +20,14 @@ class T
 
     #[ORM\Column(length: 255)]
     private ?string $desc_event = null;
+    
+    #[ORM\ManyToMany(targetEntity: Evenment::class, mappedBy: 'types',cascade: ['remove'])]    
+    private Collection $evenments;
 
-    #[ORM\ManyToOne(inversedBy: 'types')]
-    private ?Evenment $evenment = null;
+    public function __construct()
+    {
+        $this->evenments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -32,7 +39,7 @@ class T
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(string $name): self
     {
         $this->name = $name;
         return $this;
@@ -43,20 +50,38 @@ class T
         return $this->desc_event;
     }
 
-    public function setDescEvent(string $desc_event): static
+    public function setDescEvent(string $desc_event): self
     {
         $this->desc_event = $desc_event;
         return $this;
     }
 
-    public function getEvenment(): ?Evenment
+    /**
+     * @return Collection<int, Evenment>
+     */
+    public function getEvenments(): Collection
     {
-        return $this->evenment;
+        return $this->evenments;
     }
 
-    public function setEvenment(?Evenment $evenment): static
+    public function addEvenment(Evenment $evenment): self
     {
-        $this->evenment = $evenment;
+        if (!$this->evenments->contains($evenment)) {
+            $this->evenments->add($evenment);
+            // Keep the bidirectional relationship in sync
+            $evenment->addType($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvenment(Evenment $evenment): self
+    {
+        if ($this->evenments->removeElement($evenment)) {
+            // Keep the bidirectional relationship in sync
+            $evenment->removeType($this);
+        }
+
         return $this;
     }
 }

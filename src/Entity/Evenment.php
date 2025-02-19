@@ -10,6 +10,7 @@ use Doctrine\DBAL\Types\Types;
 #[ORM\Entity(repositoryClass: EvenmentRepository::class)]
 class Evenment
 {
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -30,8 +31,15 @@ class Evenment
     #[ORM\Column(length: 50)]
     private ?string $status = 'Pending';
 
-    #[ORM\OneToMany(mappedBy: 'evenment', targetEntity: T::class)]
+    #[ORM\ManyToMany(targetEntity: T::class, inversedBy: 'evenments')]
+    #[ORM\JoinTable(name: 'evenment_t')]
     private Collection $types;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $duree = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $nb_place_dispo = null;
 
     public function __construct()
     {
@@ -124,6 +132,30 @@ class Evenment
                 $type->setEvenment(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDuree(): ?string
+    {
+        return $this->duree;
+    }
+
+    public function setDuree(?string $duree): static
+    {
+        $this->duree = $duree;
+
+        return $this;
+    }
+
+    public function getNbPlaceDispo(): ?int
+    {
+        return $this->nb_place_dispo;
+    }
+
+    public function setNbPlaceDispo(?int $nb_place_dispo): static
+    {
+        $this->nb_place_dispo = $nb_place_dispo;
 
         return $this;
     }

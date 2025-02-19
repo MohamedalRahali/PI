@@ -3,6 +3,7 @@
 {% block title %}Create New Type{% endblock %}
 
 {% block body %}
+<<<<<<< HEAD
     <h1>Create New Type</h1>
 
     {{ form_start(form) }}
@@ -12,3 +13,69 @@
 
     <a href="{{ path('app_type_index') }}">Back to list</a>
 {% endblock %}
+=======
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h1 class="mb-4 text-center text-primary">
+            <i class="fas fa-plus-circle"></i> Créer un nouveau type
+        </h1>
+
+        <div class="type-form">
+            {{ form_start(form, { 'attr': {'onsubmit': 'return validateForm()'} }) }}
+                <div class="mb-3">
+                    <label for="type-name">
+                        <i class="fas fa-tag"></i> Nom du Type
+                    </label>
+                    {{ form_widget(form.name, { 'attr': {'class': 'form-control', 'id': 'type-name', 'oninput': 'validateField(this)'} }) }}
+                    <div class="valid-feedback">✅ Correct</div>
+                    <div class="invalid-feedback">❌ Le nom doit contenir au moins 3 caractères</div>
+                </div>
+                <button class="btn btn-success btn-block">
+                    <i class="fas fa-check-circle"></i> Créer
+                </button>
+            {{ form_end(form) }}
+        </div>
+
+        <div class="form-container mt-4 text-center">
+            <a href="{{ path('app_type_index') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Retour à la liste
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card { border-radius: 10px; }
+    .btn-success { font-size: 18px; padding: 12px 24px; }
+    .btn-secondary { font-size: 16px; padding: 10px 20px; }
+    .type-form { margin-top: 30px; }
+    .type-form .mb-3 { margin-bottom: 20px; }
+    .type-form button { font-size: 18px; width: 100%; }
+    .invalid-feedback { display: none; color: red; }
+    .valid-feedback { display: none; color: green; }
+    .is-invalid ~ .invalid-feedback { display: block; }
+    .is-valid ~ .valid-feedback { display: block; }
+</style>
+
+<script>
+    function validateField(field) {
+        if (field.value.length >= 3) {
+            field.classList.remove('is-invalid');
+            field.classList.add('is-valid');
+        } else {
+            field.classList.remove('is-valid');
+            field.classList.add('is-invalid');
+        }
+    }
+
+    function validateForm() {
+        const field = document.getElementById('type-name');
+        validateField(field);
+        return !field.classList.contains('is-invalid');
+    }
+</script>
+
+{% endblock %}
+>>>>>>> cd5b4cd (crud tout en marche)

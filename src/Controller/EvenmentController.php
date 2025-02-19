@@ -1,23 +1,20 @@
 <?php
 
-// src/Controller/EvenmentController.php
-
 namespace App\Controller;
 
 use App\Entity\Evenment;
 use App\Form\EvenmentType;
-use Doctrine\ORM\EntityManagerInterface; // Ajoutez cette ligne pour l'injection du service Doctrine
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Repository\EvenmentRepository; // Ajoutez cette ligne pour importer EvenmentRepository
+use App\Repository\EvenmentRepository;
 
 class EvenmentController extends AbstractController
 {
     private $entityManager;
 
-    // Injectez le service EntityManagerInterface dans le constructeur
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -30,6 +27,7 @@ class EvenmentController extends AbstractController
             'evenments' => $evenmentRepository->findAll(),
         ]);
     }
+    
 
     #[Route('/evenment/new', name: 'evenment_new')]
     public function new(Request $request): Response
@@ -40,10 +38,11 @@ class EvenmentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Utilisez $this->entityManager pour accéder à l'EntityManager
+            // Persist the Evenment entity
             $this->entityManager->persist($evenment);
             $this->entityManager->flush();
 
+            // Redirect to the index page after successful creation
             return $this->redirectToRoute('evenment_index');
         }
 
@@ -58,7 +57,7 @@ class EvenmentController extends AbstractController
         return $this->render('evenment/show.html.twig', [
             'evenment' => $evenment,
         ]);
-    }
+    } 
 
     #[Route('/evenment/{id}/edit', name: 'evenment_edit')]
     public function edit(Request $request, Evenment $evenment): Response
@@ -67,8 +66,10 @@ class EvenmentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Save changes to the Evenment entity
             $this->entityManager->flush();
 
+            // Redirect to the index page after successful update
             return $this->redirectToRoute('evenment_index');
         }
 
@@ -80,12 +81,17 @@ class EvenmentController extends AbstractController
     #[Route('/evenment/{id}/delete', name: 'evenment_delete')]
     public function delete(Request $request, Evenment $evenment): Response
     {
+        // Check for CSRF token validity
         if ($this->isCsrfTokenValid('delete' . $evenment->getId(), $request->request->get('_token'))) {
+            // Remove the Evenment entity
             $this->entityManager->remove($evenment);
             $this->entityManager->flush();
         }
 
+        // Redirect to the index page after deletion
         return $this->redirectToRoute('evenment_index');
     }
-}
 
+
+
+}

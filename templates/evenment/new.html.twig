@@ -7,105 +7,27 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
 
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        padding: 20px;
+    /* Styling for duration fields */
+    .duration-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
     }
 
-    h1 {
-        color: #333;
-        font-size: 24px;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .form-container {
-        background-color: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        max-width: 600px;
-        margin: auto;
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-group label {
-        font-weight: bold;
-    }
-
-    .form-group input, .form-group textarea, .form-group select {
-        width: 100%;
+    .duration-container select {
+        width: auto;
         padding: 10px;
         border-radius: 5px;
         border: 1px solid #ccc;
-    }
-
-    .form-group input.is-valid, .form-group textarea.is-valid, .form-group select.is-valid {
-        border-color: #28a745;
-    }
-
-    .form-group input.is-invalid, .form-group textarea.is-invalid, .form-group select.is-invalid {
-        border-color: #dc3545;
-    }
-
-    .form-group .valid-feedback {
-        color: #28a745;
-        display: none;
-    }
-
-    .form-group .invalid-feedback {
-        color: #dc3545;
-        display: none;
-    }
-
-    .form-group input.is-valid ~ .valid-feedback,
-    .form-group textarea.is-valid ~ .valid-feedback,
-    .form-group select.is-valid ~ .valid-feedback {
-        display: block;
-    }
-
-    .form-group input.is-invalid ~ .invalid-feedback,
-    .form-group textarea.is-invalid ~ .invalid-feedback,
-    .form-group select.is-invalid ~ .invalid-feedback {
-        display: block;
-    }
-
-    .form-group input[type="submit"] {
-        background-color: #28a745;
-        color: white;
-        border: none;
-        cursor: pointer;
-    }
-
-    .form-group input[type="submit"]:hover {
-        background-color: #218838;
-    }
-
-    .back-link {
-        display: inline-block;
-        margin-top: 20px;
-        color: #007bff;
+        background-color: #f8f9fa;
         font-size: 16px;
-        text-decoration: none;
     }
 
-    .back-link:hover {
-        text-decoration: underline;
-    }
-
-    .form-group i {
-        margin-right: 8px;
-        color: #007bff;
-    }
-
-    #map {
-        height: 400px;
-        width: 100%;
-        margin-top: 15px;
+    .duration-container label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
     }
 </style>
 {% endblock %}
@@ -115,6 +37,7 @@
 
 <div class="form-container">
     {{ form_start(form, { 'attr': {'onsubmit': 'return validateForm()'} }) }}
+        <!-- Title -->
         <div class="form-group">
             <label for="title">
                 <i class="fas fa-heading"></i> Title of the event
@@ -123,6 +46,8 @@
             <div class="valid-feedback">✅ Correct</div>
             <div class="invalid-feedback">❌ Title must be at least 5 characters long</div>
         </div>
+
+        <!-- Date -->
         <div class="form-group">
             <label for="date">
                 <i class="fas fa-calendar-day"></i> Event Date
@@ -131,6 +56,8 @@
             <div class="valid-feedback">✅ Correct</div>
             <div class="invalid-feedback">❌ The date must be at least 2 days in the future</div>
         </div>
+
+        <!-- Description -->
         <div class="form-group">
             <label for="description">
                 <i class="fas fa-info-circle"></i> Description
@@ -139,6 +66,8 @@
             <div class="valid-feedback">✅ Correct</div>
             <div class="invalid-feedback">❌ Description must be at least 5 characters long</div>
         </div>
+
+        <!-- Location -->
         <div class="form-group">
             <label for="lieux">
                 <i class="fas fa-map-marker-alt"></i> Location
@@ -147,7 +76,10 @@
             <div class="valid-feedback">✅ Correct</div>
             <div class="invalid-feedback">❌ Location must be at least 5 characters long</div>
         </div>
+
         <div id="map"></div>
+
+        <!-- Event Status -->
         <div class="form-group">
             <label for="status">
                 <i class="fas fa-flag"></i> Event Status
@@ -156,6 +88,8 @@
             <div class="valid-feedback">✅ Correct</div>
             <div class="invalid-feedback">❌ {{ form_errors(form.status) }}</div>
         </div>
+
+        <!-- Event Types -->
         <div class="form-group">
             <label for="types">
                 <i class="fas fa-list"></i> Event Types
@@ -164,6 +98,19 @@
             <div class="valid-feedback">✅ Correct</div>
             <div class="invalid-feedback">❌ {{ form_errors(form.types) }}</div>
         </div>
+
+        <!-- Duration -->
+        <div class="form-group">
+            <label for="duree">
+                <i class="fas fa-clock"></i> Event Duration
+            </label>
+            <div class="duration-container">
+                {{ form_widget(form.duree, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="valid-feedback">✅ Correct</div>
+            <div class="invalid-feedback">❌ Please select a valid duration</div>
+        </div>
+
         <div class="form-group text-center">
             <button type="submit" class="btn btn-primary">Save</button>
         </div>

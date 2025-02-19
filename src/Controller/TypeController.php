@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\T;
+<<<<<<< HEAD
 use App\Form\T1Type;
+=======
+use App\Form\TType;
+>>>>>>> cd5b4cd (crud tout en marche)
 use App\Repository\TRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,7 +29,11 @@ final class TypeController extends AbstractController{
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $t = new T();
+<<<<<<< HEAD
         $form = $this->createForm(T1Type::class, $t);
+=======
+        $form = $this->createForm(TType::class, $t);
+>>>>>>> cd5b4cd (crud tout en marche)
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -52,7 +60,11 @@ final class TypeController extends AbstractController{
     #[Route('/{id}/edit', name: 'app_type_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, T $t, EntityManagerInterface $entityManager): Response
     {
+<<<<<<< HEAD
         $form = $this->createForm(T1Type::class, $t);
+=======
+        $form = $this->createForm(TType::class, $t);
+>>>>>>> cd5b4cd (crud tout en marche)
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
