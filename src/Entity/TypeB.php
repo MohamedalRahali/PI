@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\TypeBRepository;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: TypeBRepository::class)]
+class TypeB
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $libelle = null;
+
+    #[ORM\ManyToOne(inversedBy: 'typeBs')]
+    private ?Blogs $rela = null;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
+    public function setLibelle(string $libelle): self
+    {
+        $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    public function getTypeB(): ?TypeB
+    {
+        return $this->typeB;
+    }
+
+    public function setTypeB(string $typeB): static
+    {
+        $this->typeB = $typeB;
+
+        return $this;
+    }
+
+    public function getRela(): ?Blogs
+    {
+        return $this->rela;
+    }
+
+    public function setRela(?Blogs $rela): static
+    {
+        $this->rela = $rela;
+
+        return $this;
+    }
+}

@@ -1,0 +1,68 @@
+{% extends 'type_b/base.html.twig' %}
+
+{% block body %}
+    <h1>Détails du blog</h1>
+    <p><strong>ID:</strong> {{ typeB.id }}</p>
+    <p><strong>Type:</strong> {{ typeB.libelle }}</p>
+    <a href="{{ path('app_typesList') }}">Retour à la liste</a>
+
+    <style>
+        /* Style général pour la page */
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Style pour le conteneur principal */
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Style pour le titre */
+        h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Style pour les paragraphes */
+        p {
+            font-size: 1.2em;
+            color: #34495e;
+            margin: 10px 0;
+        }
+
+        /* Style pour les étiquettes */
+        strong {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        /* Style pour le lien de retour */
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #3498db;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #2980b9;
+        }
+    </style>
+{% endblock %}

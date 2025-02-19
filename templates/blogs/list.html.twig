@@ -1,0 +1,83 @@
+{% extends 'blogs/base.html.twig' %}
+
+{% block title %}Blogs{% endblock %}
+
+
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4">
+            <h1 class="mb-4 text-center text-primary">
+                <i class="fas fa-calendar-alt"></i> Liste des Blogs
+            </h1>
+
+            {% if blogs is not defined or blogs is empty %}
+                    <div class="alert alert-warning" role="alert">
+                        <h4 class="alert-heading">Aucun blog disponible.</h4>
+                    </div>
+                {% else %}
+
+            <div class="blog-list">
+                <ul class="list-group">
+                    {% for blog in blogs %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="{{ path('app_showBlog', {'id': blog.id}) }}" class="text-decoration-none">
+                                <i class="fas fa-calendar-day"></i> {{ blog.titre }}
+                            </a>
+                            <span class="badge badge-pill badge-info">
+                                <i class="fas fa-clock"></i> {{ blog.DateCrea|date('Y-m-d') }}
+                            </span>
+                            <td><a href="{{ path('app_showBlog', { id: blog.id }) }}">details</a></td>
+                            <td><a href="{{ path('app_editBlog', { id: blog.id }) }}">Modifier</a></td>
+                            <td><a href="{{ path('app_deleteBlog', { id: blog.id }) }}">Supprimer</a></td>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <p class="mt-3 text-center">
+                Le nombre total des blogs est : <span class="badge badge-info">{{ blogs|length }}</span>
+            </p>
+            {% endif %}
+            <a href="{{ path('addBlogs') }}" class="btn btn-success mt-4 d-block mx-auto">
+                <i class="fas fa-plus-circle"></i> Créer un nouveau blog
+            </a>
+        </div>
+    </div>
+
+    {# Ajout de styles personnalisés #}
+    <style>
+        .list-group-item {
+            font-size: 18px;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .list-group-item a {
+            color: #007bff;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .list-group-item a:hover {
+            text-decoration: underline;
+        }
+
+        .badge {
+            font-size: 14px;
+        }
+
+        .btn-success {
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .btn-success i {
+            margin-right: 10px;
+        }
+    </style>
+
+    {# Ajout de FontAwesome pour les icônes #}
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}
