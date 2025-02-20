@@ -1,0 +1,79 @@
+{% extends 'type_b/base.html.twig' %}
+
+{% block title %}Types{% endblock %}
+
+
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4">
+            <h1 class="mb-4 text-center text-primary">
+                <i class="fas fa-calendar-alt"></i> Liste des Types
+            </h1>
+
+            {% if typeBs is not defined or typeBs is empty %}
+                    <div class="alert alert-warning" role="alert">
+                        <h4 class="alert-heading">Aucun type disponible.</h4>
+                    </div>
+                {% else %}
+
+            <div class="type-list">
+                <ul class="list-group">
+                    {% for typeB in typeBs %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="{{ path('app_showTypes', {'id': typeB.id}) }}" class="text-decoration-none">
+                                <i class="fas fa-calendar-day"></i> {{ typeB.libelle }}
+                            </a>
+                            <td><a href="{{ path('app_showTypes', { id: typeB.id }) }}">details</a></td>
+                            <td><a href="{{ path('app_editTypes', { id: typeB.id }) }}">Modifier</a></td>
+                            <td><a href="{{ path('app_deleteTypes', { id: typeB.id }) }}">Supprimer</a></td>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <p class="mt-3 text-center">
+                Le nombre total des types est : <span class="badge badge-info">{{ typeBs|length }}</span>
+            </p>
+            {% endif %}
+            <a href="{{ path('addTypes') }}" class="btn btn-success mt-4 d-block mx-auto">
+                <i class="fas fa-plus-circle"></i> Créer un nouveau type
+            </a>
+        </div>
+    </div>
+
+    {# Ajout de styles personnalisés #}
+    <style>
+        .list-group-item {
+            font-size: 18px;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .list-group-item a {
+            color: #007bff;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .list-group-item a:hover {
+            text-decoration: underline;
+        }
+
+        .badge {
+            font-size: 14px;
+        }
+
+        .btn-success {
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .btn-success i {
+            margin-right: 10px;
+        }
+    </style>
+
+    {# Ajout de FontAwesome pour les icônes #}
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}
