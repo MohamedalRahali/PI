@@ -113,7 +113,7 @@ class Blogs
     public function removeTypeB(TypeB $typeB): static
     {
         if ($this->typeBs->removeElement($typeB)) {
-            // set the owning side to null (unless already changed)
+
             if ($typeB->getRela() === $this) {
                 $typeB->setRela(null);
             }

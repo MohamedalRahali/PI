@@ -26,7 +26,6 @@ final class BlogsController extends AbstractController
     #[Route('/blogs', name: 'app_blogs')]
     public function index(EntityManagerInterface $entityManager): Response
     {
-        // Récupération des blogs depuis la base de données
         $blogs = $entityManager->getRepository(Blogs::class)->findAll();
 
         return $this->render('blogs/index.html.twig', [
