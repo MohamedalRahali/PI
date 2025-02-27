@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Blogs;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\BlogsType;
+use App\Form\BlogSearchType;
 
 final class BlogsController extends AbstractController
 {
@@ -104,5 +105,46 @@ final class BlogsController extends AbstractController
         }
         return $this->redirectToRoute('app_blogsList');
     }
-    
+
+
+    #[Route('/blogs/search', name: 'app_search')]
+    public function search(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(BlogSearchType::class);
+        $form->handleRequest($request);
+
+        $queryBuilder = $entityManager->getRepository(Blogs::class)->createQueryBuilder('b');
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            if (!empty($data['titre'])) {
+                $queryBuilder->andWhere('b.titre LIKE :titre')
+                    ->setParameter('titre', '%' . $data['titre'] . '%');
+            }
+
+            if (!empty($data['descr'])) {
+                $queryBuilder->andWhere('b.descr LIKE :descr')
+                    ->setParameter('descr', '%' . $data['descr'] . '%');
+            }
+
+            if (!empty($data['dateCrea'])) {
+                $queryBuilder->andWhere('b.dateCrea = :dateCrea')
+                    ->setParameter('dateCrea', $data['dateCrea']);
+            }
+
+            if (!empty($data['typeBs'])) {
+                $queryBuilder->andWhere('b.typeBs IN (:typeBs)')
+                    ->setParameter('typeBs', $data['typeBs']);
+            }
+        }
+
+        $results = $queryBuilder->getQuery()->getResult();
+
+        return $this->render('blogs/search.html.twig', [
+            'form' => $form->createView(),
+            'results' => $results,
+        ]);
+    }
+
 }
