@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\TypeB;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\TypeBType;
+use App\Form\TypeBSearchType;
 
 class TypeBController extends AbstractController
 {
@@ -31,11 +32,34 @@ class TypeBController extends AbstractController
     }
 
     #[Route('/typesList', name: 'app_typesList', methods: ['GET'])]
-    public function typeBList(): Response
+    public function typeBList(Request $request, TypeBRepository $typeBRepository): Response
     {
-        $typeBs = $this->typeBRepository->findAllTypeB();
-        return $this->render('Type_b/list.html.twig', [
-            'typeBs' => $typeBs,
+        $form = $this->createForm(TypeBSearchType::class);
+        $form->handleRequest($request);
+
+        $searchTerm = $request->query->get('search', '');
+
+        $queryBuilder = $typeBRepository->createQueryBuilder('t');
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            if (!empty($data['titre'])) {
+                $queryBuilder->andWhere('t.libelle LIKE :libelle')
+                    ->setParameter('libelle', '%' . $data['libelle'] . '%');
+            }
+
+        } elseif ($searchTerm) {
+            $queryBuilder->where('t.libelle LIKE :search')
+                ->setParameter('search', '%' . $searchTerm . '%');
+        }
+
+        $typeB = $queryBuilder->getQuery()->getResult();
+
+        return $this->render('type_b/list.html.twig', [
+            'form' => $form->createView(),
+            'typeB' => $typeB,
+            'searchTerm' => $searchTerm,
         ]);
     }
 

@@ -34,11 +34,6 @@ class BlogsType extends AbstractType
                 ],
                 'label' => 'Description',
             ])
-            ->add('dateCrea', DateTimeType::class, [
-                'widget' => 'single_text',
-                'data' => new \DateTime(),
-                'label' => 'Date de création',
-            ])
             ->add('datePub', DateTimeType::class, [
                 'widget' => 'single_text',
                 'label' => 'Date à publier',

@@ -11,11 +11,15 @@ use App\Entity\Blogs;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\BlogsType;
 use App\Form\BlogSearchType;
+use App\Entity\Comment;
+use App\Form\CommentType;
+use App\Entity\Like;
 
 final class BlogsController extends AbstractController
 {
     private $blogsRepo;
     private $entityManager;
+    private $inappropriateWords = ['mem', 'ttt', 'sss'];
 
     public function __construct(BlogsRepository $BlogsRepositoryParam,EntityManagerInterface $entityManagerParam)
     {
@@ -37,11 +41,48 @@ final class BlogsController extends AbstractController
 
     
     #[Route('/blogsList', name: 'app_blogsList', methods:['GET'])]
-    public function BlogsList(): Response
+    public function BlogsList(Request $request, BlogsRepository $blogsRepository): Response
     {
-        $blogs = $this->BlogsRepo->findAllBlogs();
+        $form = $this->createForm(BlogSearchType::class);
+        $form->handleRequest($request);
+
+        $searchTerm = $request->query->get('search', '');
+
+        $queryBuilder = $blogsRepository->createQueryBuilder('b');
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            if (!empty($data['titre'])) {
+                $queryBuilder->andWhere('b.titre LIKE :titre')
+                    ->setParameter('titre', '%' . $data['titre'] . '%');
+            }
+
+            if (!empty($data['descr'])) {
+                $queryBuilder->andWhere('b.descr LIKE :descr')
+                    ->setParameter('descr', '%' . $data['descr'] . '%');
+            }
+
+            if (!empty($data['dateCrea'])) {
+                $queryBuilder->andWhere('b.dateCrea = :dateCrea')
+                    ->setParameter('dateCrea', $data['dateCrea']);
+            }
+
+            if (!empty($data['typeBs'])) {
+                $queryBuilder->andWhere('b.typeBs IN (:typeBs)')
+                    ->setParameter('typeBs', $data['typeBs']);
+            }
+        } elseif ($searchTerm) {
+            $queryBuilder->where('b.titre LIKE :search OR b.descr LIKE :search')
+                ->setParameter('search', '%' . $searchTerm . '%');
+        }
+
+        $blogs = $queryBuilder->getQuery()->getResult();
+
         return $this->render('blogs/list.html.twig', [
+            'form' => $form->createView(),
             'blogs' => $blogs,
+            'searchTerm' => $searchTerm,
         ]);
     }
     #[Route('/addBlogs', name: 'addBlogs', methods: ['GET', 'POST'])]
@@ -65,13 +106,60 @@ final class BlogsController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-    #[Route('/showBlogs/{id}', name: 'app_showBlog', methods: ['GET'])]
-    public function show(Blogs $blogs): Response
+    #[Route('/showBlogs/{id}', name: 'app_showBlog', methods: ['GET', "POST"])]
+    public function show(Blogs $blog, Request $request, EntityManagerInterface $entityManager): Response
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setRelat($blog);
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            if ($comment->containsInappropriateWords($this->inappropriateWords)) {
+                $comment->setIsReported(true);
+                $entityManager->flush();
+            }
+
+            return $this->redirectToRoute('app_showBlog', ['id' => $blog->getId()]);
+        }
+
         return $this->render('blogs/show.html.twig', [
-            'blog' => $blogs,
+            'blog' => $blog,
+            'form' => $form->createView(),
+            'inappropriateWords' => $this->inappropriateWords,
         ]);
     }
+
+    #[Route('/blog/{id}/like', name: 'app_blogLike', methods: ["POST"])]
+    public function likeBlog(Blogs $blog, EntityManagerInterface $entityManager): Response
+    {
+        $blog->incrementLikes();
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_showBlog', ['id' => $blog->getId()]);
+    }
+    
+    #[Route('/comment/{id}/delete', name: 'app_deleteComment', methods: ['DELETE', 'POST'])]
+    public function deleteComment(Comment $comment, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager->remove($comment);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_showBlog', ['id' => $comment->getRelat()->getId()]);
+    }
+
+    #[Route('/comment/{id}/report', name: 'app_reportComment', methods: ["POST"])]
+    public function reportComment(Comment $comment, EntityManagerInterface $entityManager): Response
+    {
+        $comment->setIsReported(true);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_showBlog', ['id' => $comment->getRelat()->getId()]);
+    }
+
     #[Route('/edit/{id}', name: 'app_editBlog', methods: ['GET', 'POST'])]
     public function edit(Request $request, int $id, BlogsRepository $blogsRepository, EntityManagerInterface $entityManager): Response
     {

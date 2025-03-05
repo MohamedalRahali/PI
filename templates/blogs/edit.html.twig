@@ -4,6 +4,8 @@
     <h1>Modifier le blog</h1>
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
         {{ form_widget(form) }}
+        <a href="{{ path('app_blogsList') }}">Retour à la liste</a>
+        <button type="reset">Réinitialiser</button>
         <button type="submit">Mettre à jour</button>
     {{ form_end(form) }}
 
@@ -74,7 +76,7 @@
             padding: 10px 20px;
             font-size: 1.2em;
             color: #fff;
-            background-color: #e74c3c;
+            background-color: #4CAF50;
             border: none;
             border-radius: 4px;
             cursor: pointer;
@@ -84,7 +86,25 @@
         }
 
         button[type="submit"]:hover {
-            background-color: #c0392b;
+            background-color: #4CAF50;
+        }
+
+        /* Style pour le bouton de réinitialisation */
+        button[type="reset"] {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #3498db;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            align-self: center;
+        }
+
+        button[type="reset"]:hover {
+            background-color: #3498db;
         }
 
         /* Style pour les messages d'erreur */
@@ -92,6 +112,21 @@
             color: #e74c3c;
             font-size: 0.9em;
             margin-top: 5px;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #3498db;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #2980b9;
         }
     </style>
 {% endblock %}

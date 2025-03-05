@@ -81,6 +81,43 @@
 </head>
 
 <body>
+<!-- Simple Flash Message Box -->
+<div id="flash-message" style="
+display: none;
+position: fixed;
+bottom: 20px;
+right: 20px;
+background: #4CAF50;
+color: white;
+padding: 12px 20px;
+border-radius: 5px;
+box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+font-size: 16px;
+text-align: center;
+z-index: 1000;
+opacity: 0;
+transition: opacity 0.5s ease-in-out;">
+</div>
+
+{% for label, messages in app.flashes %}
+{% for message in messages %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let flashBox = document.getElementById("flash-message");
+            flashBox.innerText = "{{ message }}";
+            flashBox.style.display = "block";
+            flashBox.style.opacity = "1";
+
+            setTimeout(() => {
+                flashBox.style.opacity = "0";
+                setTimeout(() => {
+                    flashBox.style.display = "none";
+                }, 500);
+            }, 3000);
+        });
+    </script>
+    {% endfor %}
+    {% endfor %}
 
     <div class="container-fluid">
         <!-- Navbar -->

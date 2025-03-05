@@ -5,41 +5,60 @@
 
 
 {% block body %}
-    <div class="container mt-5">
-        <div class="card shadow-lg p-4">
-            <h1 class="mb-4 text-center text-primary">
-                <i class="fas fa-calendar-alt"></i> Liste des Types
-            </h1>
+<form method="GET" action="{{ path('app_typesList') }}" class="mb-4 text-center">
+    <div class="input-group" style="max-width: 500px; margin: auto;">
+        <input type="text" name="search" class="form-control" placeholder="Rechercher un produit..." 
+               value="{{ searchTerm }}" aria-label="Rechercher un produit">
+        <button class="btn btn-primary" type="submit">
+            <i class="fas fa-search"></i>
+        </button>
+        {% if searchTerm %}
+            <a href="{{ path('app_typesList') }}" class="btn btn-secondary">Réinitialiser</a>
+        {% endif %}
+    </div>
+</form>
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h1 class="mb-4 text-center text-primary">
+            <i class="fas fa-calendar-alt"></i> Liste des Types
+        </h1>
 
-            {% if typeBs is not defined or typeBs is empty %}
-                    <div class="alert alert-warning" role="alert">
-                        <h4 class="alert-heading">Aucun type disponible.</h4>
-                    </div>
-                {% else %}
-
+        {% if typeB is empty %}
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading">Aucun type disponible.</h4>
+            </div>
+        {% else %}
             <div class="type-list">
                 <ul class="list-group">
-                    {% for typeB in typeBs %}
+                    {% for typeB in typeB %}
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <a href="{{ path('app_showTypes', {'id': typeB.id}) }}" class="text-decoration-none">
                                 <i class="fas fa-calendar-day"></i> {{ typeB.libelle }}
                             </a>
-                            <td><a href="{{ path('app_showTypes', { id: typeB.id }) }}">details</a></td>
-                            <td><a href="{{ path('app_editTypes', { id: typeB.id }) }}">Modifier</a></td>
-                            <td><a href="{{ path('app_deleteTypes', { id: typeB.id }) }}">Supprimer</a></td>
+                            <div>
+                                <a href="{{ path('app_showTypes', { id: typeB.id }) }}" class="btn btn-info btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{{ path('app_editTypes', { id: typeB.id }) }}" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{{ path('app_deleteTypes', { id: typeB.id }) }}" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
                         </li>
                     {% endfor %}
                 </ul>
             </div>
             <p class="mt-3 text-center">
-                Le nombre total des types est : <span class="badge badge-info">{{ typeBs|length }}</span>
+                Le nombre total des types est : <span class="badge badge-info">{{ typeB|length }}</span>
             </p>
-            {% endif %}
-            <a href="{{ path('addTypes') }}" class="btn btn-success mt-4 d-block mx-auto">
-                <i class="fas fa-plus-circle"></i> Créer un nouveau type
-            </a>
-        </div>
+        {% endif %}
+        <a href="{{ path('addTypes') }}" class="btn btn-success mt-4 d-block mx-auto">
+            <i class="fas fa-plus-circle"></i> Créer un nouveau type
+        </a>
     </div>
+</div>
 
     {# Ajout de styles personnalisés #}
     <style>

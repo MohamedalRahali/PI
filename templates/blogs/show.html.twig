@@ -2,14 +2,44 @@
 
 {% block body %}
     <h1>Détails du blog</h1>
-    <p><strong>ID:</strong> {{ blog.id }}</p>
     <p><strong>Titre:</strong> {{ blog.titre }}</p>
     <p><strong>Description:</strong> {{ blog.Descr }}</p>
+    <p><strong>Commentaires:</strong></p>
+    {{ form_start(form, {'method': 'POST'}) }}
+    <div class="form-group text-center">
+        {{ form_widget(form.content, {'attr': {'class': 'form-control', 'placeholder': 'Ajouter un commentaire...'}}) }}
+        <button type="submit" class="btn btn-primary"><i class="fas fa-comment"></i></button>
+    </div>
+    {{ form_end(form) }}
+    <ul>
+        {% for comment in blog.comments %}
+            <li>
+                {{ comment.content }} - <span class="badge badge-pill badge-info"><i class="fas fa-clock"></i> {{ comment.createdAt|date('d-m-Y') }}</span>
+                <form action="{{ path('app_deleteComment', {'id': comment.id}) }}" method="POST" style="display:inline;">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                </form>
+                <form action="{{ path('app_reportComment', {'id': comment.id}) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-warning btn-sm">
+                        <i class="fas fa-flag"></i>
+                    </button>
+                </form>
+                {% if comment.isIsReported() %}
+                    <span class="badge badge-pill badge-danger">Signalé</span>
+                    <ul>
+                        {% for word in comment.getInappropriateWords(inappropriateWords) %}
+                            <li class="text-danger">{{ word }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
     <span class="badge badge-pill badge-info">
-        <i class="fas fa-clock"></i> {{ blog.DateCrea|date('Y-m-d') }}
+        <i class="fas fa-clock"></i> {{ blog.DateCrea|date('d-m-Y') }}
     </span>
     <span class="badge badge-pill badge-info">
-        <i class="fas fa-clock"></i> {{ blog.DatePub|date('Y-m-d') }}
+        <i class="fas fa-clock"></i> {{ blog.DatePub|date('d-m-Y') }}
     </span>
     <p><strong>Types:</strong>
         <ul>
@@ -20,6 +50,11 @@
             {% endfor %}
         </ul>
     </p>
+    <form action="{{ path('app_blogLike', {'id': blog.id}) }}" method="POST" style="display:inline;">
+        <button type="submit" class="btn btn-success btn-sm">
+            <i class="fas fa-thumbs-up"></i> Aimer ({{ blog.likes }})
+        </button>
+    </form>
     <a href="{{ path('app_blogsList') }}">Retour à la liste</a>
 
     <style>

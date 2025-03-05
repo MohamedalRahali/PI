@@ -29,15 +29,26 @@ class Blogs
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $datePub = null;
 
+    #[ORM\Column(type: 'integer')]
+    private int $likes = 0;
+
     /**
      * @var Collection<int, TypeB>
      */
     #[ORM\OneToMany(targetEntity: TypeB::class, mappedBy: 'rela')]
     private Collection $typeBs;
 
+    /**
+     * @var Collection<int, Comment>
+     */
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'relat')]
+    private Collection $comments;
+
     public function __construct()
     {
+        $this->dateCrea = new \DateTime();
         $this->typeBs = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -93,6 +104,18 @@ class Blogs
         return $this;
     }
 
+    public function getTypeB(): ?TypeB
+    {
+        return $this->typeB;
+    }
+
+    public function setTypeB(?TypeB $typeB): self
+    {
+        $this->typeB = $typeB;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, TypeB>
      */
@@ -122,4 +145,54 @@ class Blogs
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setRelat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getRelat() === $this) {
+                $comment->setRelat(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLikes(): int
+    {
+        return $this->likes;
+    }
+
+    public function setLikes(int $likes): self
+    {
+        $this->likes = $likes;
+
+        return $this;
+    }
+
+    public function incrementLikes(): self
+    {
+        $this->likes++;
+
+        return $this;
+    }
+
 }

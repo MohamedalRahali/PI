@@ -4,6 +4,18 @@
 
 
 {% block body %}
+<form method="GET" action="{{ path('app_blogsList') }}" class="mb-4 text-center">
+    <div class="input-group" style="max-width: 500px; margin: auto;">
+        <input type="text" name="search" class="form-control" placeholder="Rechercher un produit..." 
+               value="{{ searchTerm }}" aria-label="Rechercher un produit">
+        <button class="btn btn-primary" type="submit">
+            <i class="fas fa-search"></i>
+        </button>
+        {% if searchTerm %}
+            <a href="{{ path('app_blogsList') }}" class="btn btn-secondary">Réinitialiser</a>
+        {% endif %}
+    </div>
+</form>
     <div class="container mt-5">
         <div class="card shadow-lg p-4">
             <h1 class="mb-4 text-center text-primary">
@@ -11,11 +23,10 @@
             </h1>
 
             {% if blogs is not defined or blogs is empty %}
-                    <div class="alert alert-warning" role="alert">
-                        <h4 class="alert-heading">Aucun blog disponible.</h4>
-                    </div>
-                {% else %}
-
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading">Aucun blog disponible.</h4>
+            </div>
+        {% else %}
             <div class="blog-list">
                 <ul class="list-group">
                     {% for blog in blogs %}
@@ -24,20 +35,30 @@
                                 <i class="fas fa-calendar-day"></i> {{ blog.titre }}
                             </a>
                             <span class="badge badge-pill badge-info">
-                                <i class="fas fa-clock"></i> {{ blog.DateCrea|date('Y-m-d') }}
+                                <i class="fas fa-clock"></i> {{ blog.dateCrea|date('Y-m-d') }}
                             </span>
-                            <td><a href="{{ path('app_showBlog', { id: blog.id }) }}">details</a></td>
-                            <td><a href="{{ path('app_editBlog', { id: blog.id }) }}">Modifier</a></td>
-                            <td><a href="{{ path('app_deleteBlog', { id: blog.id }) }}">Supprimer</a></td>
+                            <div>
+                                <a href="{{ path('app_showBlog', { id: blog.id }) }}" class="btn btn-info btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{{ path('app_editBlog', { id: blog.id }) }}" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{{ path('app_deleteBlog', { id: blog.id }) }}" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                                <span class="badge badge-pill badge-success">
+                                    <i class="fas fa-thumbs-up"></i> {{ blog.likes }}
+                                </span>
+                            </div>
                         </li>
                     {% endfor %}
                 </ul>
             </div>
-
             <p class="mt-3 text-center">
                 Le nombre total des blogs est : <span class="badge badge-info">{{ blogs|length }}</span>
             </p>
-            {% endif %}
+        {% endif %}
             <a href="{{ path('addBlogs') }}" class="btn btn-success mt-4 d-block mx-auto">
                 <i class="fas fa-plus-circle"></i> Créer un nouveau blog
             </a>
