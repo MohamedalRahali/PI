@@ -24,19 +24,6 @@
                         {{ evenment.status ?? 'Pending' }}
                     </span>
                 </p>
-
-                {# Affichage des types d'événements associés #}
-                <p><strong><i class="fas fa-tag"></i> Type(s) d'événement:</strong>
-                    {% if evenment.types is not empty %}
-                        <ul>
-                            {% for type in evenment.types %}
-                                <li>{{ type.name }} - {{ type.descEvent }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        Aucun type d'événement associé.
-                    {% endif %}
-                </p>
             </div>
 
             <div class="form-container mt-4">

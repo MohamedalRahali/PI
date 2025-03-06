@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ArtConnect{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom CSS (Optional) -->
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+
+    <style>
+        /* Custom styling for navbar */
+        .navbar {
+            background-color: #343a40; /* Indigo, une couleur artistique */
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: rgb(247, 243, 243) !important; /* Couleur dorée pour le nom */
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 1.1rem;
+            padding: 0.8rem 1rem;
+            color: rgb(247, 243, 243) !important; /* Couleur dorée pour les liens */
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: rgb(234, 90, 6) !important; /* Blanc pour le survol */
+        }
+
+        /* Background styling */
+        body {
+            background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('https://via.placeholder.com/1500x800');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-right: 1px solid #ddd;
+        }
+
+        .sidebar h4 {
+            font-size: 1.25rem;
+            color:rgb(10, 90, 228);
+        }
+
+        .sidebar a {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 1.1rem;
+            color:rgb(10, 90, 228);
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .sidebar a:hover {
+            background-color: rgb(10, 90, 228);
+            color: white;
+        }
+
+        .main-content {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <a class="navbar-brand" href="#">ArtConnect</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_typesList') }}">
+                            <i class="fas fa-calendar-alt"></i> Types
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('addTypes') }}">
+                            <i class="fas fa-plus-circle"></i> Créer un type
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-envelope"></i> Contact
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-info-circle"></i> About
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="row mt-4">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar">
+                <h4>Navigation</h4>
+                <ul class="list-unstyled">
+                    <li><a href="{{ path('app_typesList') }}" class="btn btn-outline-secondary w-100 mb-3">
+                        <i class="fas fa-list"></i> Tous les types</a>
+                    </li>
+                    <li><a href="{{ path('app_blogsList') }}" class="btn btn-outline-secondary w-100 mb-3">
+                        <i class="fas fa-user"></i> Mes blogs</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-10 main-content">
+                {% block body %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <!-- JS dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
