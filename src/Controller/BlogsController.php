@@ -14,6 +14,7 @@ use App\Form\BlogSearchType;
 use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Entity\Like;
+use App\Service\PdfService;
 
 final class BlogsController extends AbstractController
 {
@@ -235,4 +236,20 @@ final class BlogsController extends AbstractController
         ]);
     }
 
+    #[Route('/pdf', name: 'app_pdf')]
+    public function downloadPdf(BlogsRepository $blogsRepository, PdfService $pdfService): Response
+    {
+        $blogs = $blogsRepository->findAll();
+
+        $html = $this->renderView('blogs/listp.html.twig', [
+            'blogs' => $blogs,
+        ]);
+
+        $pdfContent = $pdfService->generatePdf($html);
+
+        return new Response($pdfContent, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="blogs.pdf"',
+        ]);
+    }
 }
