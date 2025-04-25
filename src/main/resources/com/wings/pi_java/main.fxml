@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController" prefWidth="1200" prefHeight="800">
+    <stylesheets>
+        <URL value="@styles.css" />
+    </stylesheets>
+
+    <top>
+        <HBox styleClass="navbar" alignment="CENTER_LEFT" spacing="30" prefHeight="80">
+            <Label text="ArtConnect" styleClass="navbar-brand" style="-fx-font-size: 24px;">
+                <graphic>
+                    <ImageView fitHeight="40" fitWidth="40">
+                        <Image url="@images/palette.png" />
+                    </ImageView>
+                </graphic>
+            </Label>
+
+            <Button text="Produits" styleClass="nav-link" onAction="#navigateToManageProduit" prefWidth="150" prefHeight="40" style="-fx-font-size: 16px;">
+                <graphic>
+                    <ImageView fitHeight="24" fitWidth="24">
+                        <Image url="@images/calendar.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button text="Catégories" styleClass="nav-link" onAction="#navigateToManageCategorie" prefWidth="150" prefHeight="40" style="-fx-font-size: 16px;">
+                <graphic>
+                    <ImageView fitHeight="24" fitWidth="24">
+                        <Image url="@images/category.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button text="Contact" styleClass="nav-link" prefWidth="150" prefHeight="40" style="-fx-font-size: 16px;">
+                <graphic>
+                    <ImageView fitHeight="24" fitWidth="24">
+                        <Image url="@images/contact.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox styleClass="sidebar" spacing="20" prefWidth="250" style="-fx-padding: 20;">
+            <Label text="Navigation" styleClass="sidebar-title" style="-fx-font-size: 20px;" />
+
+            <Button text="Tous les Produits" styleClass="sidebar-btn" onAction="#navigateToManageProduit" prefWidth="200" prefHeight="40" style="-fx-font-size: 16px;">
+                <graphic>
+                    <ImageView fitHeight="24" fitWidth="24">
+                        <Image url="@images/list.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button text="Créer un Produit" styleClass="sidebar-btn" onAction="#navigateToAddProduit" prefWidth="200" prefHeight="40" style="-fx-font-size: 16px;">
+                <graphic>
+                    <ImageView fitHeight="24" fitWidth="24">
+                        <Image url="@images/add.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button text="Mes Catégories" styleClass="sidebar-btn" onAction="#navigateToManageCategorie" prefWidth="200" prefHeight="40" style="-fx-font-size: 16px;">
+                <graphic>
+                    <ImageView fitHeight="24" fitWidth="24">
+                        <Image url="@images/category.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane styleClass="main-content" style="-fx-padding: 20;">
+            <!-- Le contenu principal sera chargé ici dynamiquement -->
+        </StackPane>
+    </center>
+</BorderPane>

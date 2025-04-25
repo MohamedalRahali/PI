@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.AddProduitController"
+            stylesheets="@styles.css">
+
+    <top>
+        <HBox alignment="CENTER" 
+              style="-fx-background-color: #f8f9fa; -fx-padding: 20;">
+            <Label text="Ajouter un Produit" 
+                   styleClass="form-title" />
+        </HBox>
+    </top>
+
+    <center>
+        <VBox styleClass="form-content" 
+              style="-fx-background-color: white; -fx-background-radius: 5; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <GridPane vgap="10" hgap="10">
+                <Label text="Titre" 
+                       styleClass="field-label" 
+                       GridPane.columnIndex="0" 
+                       GridPane.rowIndex="0"/>
+                <TextField fx:id="titreField" 
+                          styleClass="form-field" 
+                          GridPane.columnIndex="1" 
+                          GridPane.rowIndex="0"/>
+                <Label text="Entrez le titre du produit" 
+                       styleClass="field-hint" 
+                       GridPane.columnIndex="1" 
+                       GridPane.rowIndex="1"/>
+
+                <Label text="Description" 
+                       styleClass="field-label" 
+                       GridPane.columnIndex="0" 
+                       GridPane.rowIndex="2"/>
+                <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <TextArea fx:id="descriptionField" 
+                             styleClass="form-field" 
+                             prefWidth="300" 
+                             prefHeight="100" />
+                    <Button fx:id="generateDescriptionButton" 
+                            text="Générer" 
+                            styleClass="btn-primary"
+                            onAction="#handleGenerateDescription" />
+                </HBox>
+                <Label text="Entrez la description du produit" 
+                       styleClass="field-hint" 
+                       GridPane.columnIndex="1" 
+                       GridPane.rowIndex="3"/>
+
+                <Label text="ID Artiste" 
+                       styleClass="field-label" 
+                       GridPane.columnIndex="0" 
+                       GridPane.rowIndex="4"/>
+                <TextField fx:id="artisteIdField" 
+                          styleClass="form-field" 
+                          GridPane.columnIndex="1" 
+                          GridPane.rowIndex="4"/>
+                <Label text="Entrez l'ID de l'artiste" 
+                       styleClass="field-hint" 
+                       GridPane.columnIndex="1" 
+                       GridPane.rowIndex="5"/>
+
+                <Label text="Prix" 
+                       styleClass="field-label" 
+                       GridPane.columnIndex="0" 
+                       GridPane.rowIndex="6"/>
+                <TextField fx:id="prixField" 
+                          styleClass="form-field" 
+                          GridPane.columnIndex="1" 
+                          GridPane.rowIndex="6"/>
+                <Label text="Entrez le prix du produit" 
+                       styleClass="field-hint" 
+                       GridPane.columnIndex="1" 
+                       GridPane.rowIndex="7"/>
+
+                <Label text="Statut" 
+                       styleClass="field-label" 
+                       GridPane.columnIndex="0" 
+                       GridPane.rowIndex="8"/>
+                <TextField fx:id="statutField" 
+                          styleClass="form-field" 
+                          GridPane.columnIndex="1" 
+                          GridPane.rowIndex="8"/>
+                <Label text="Entrez le statut du produit" 
+                       styleClass="field-hint" 
+                       GridPane.columnIndex="1" 
+                       GridPane.rowIndex="9"/>
+
+                <Label text="Date de création" 
+                       styleClass="field-label" 
+                       GridPane.columnIndex="0" 
+                       GridPane.rowIndex="10"/>
+                <DatePicker fx:id="dateCreationField" 
+                           styleClass="form-field" 
+                           GridPane.columnIndex="1" 
+                           GridPane.rowIndex="10"/>
+
+                <Label text="Catégorie" 
+                       styleClass="field-label" 
+                       GridPane.columnIndex="0" 
+                       GridPane.rowIndex="11"/>
+                <ComboBox fx:id="categorieComboBox" 
+                         styleClass="form-field" 
+                         GridPane.columnIndex="1" 
+                         GridPane.rowIndex="11"/>
+
+                <Label text="Image" 
+                       styleClass="field-label" 
+                       GridPane.columnIndex="0" 
+                       GridPane.rowIndex="12"/>
+                <TextField fx:id="imageField" 
+                          styleClass="form-field" 
+                          GridPane.columnIndex="1" 
+                          GridPane.rowIndex="12"/>
+                <Label text="Entrez l'URL de l'image" 
+                       styleClass="field-hint" 
+                       GridPane.columnIndex="1" 
+                       GridPane.rowIndex="13"/>
+            </GridPane>
+
+            <HBox alignment="CENTER_RIGHT" 
+                  spacing="15" 
+                  style="-fx-padding: 20 0 0 0;">
+                <Button onAction="#handleBackToListProduit" 
+                        styleClass="btn-secondary" 
+                        text="Retour" 
+                        prefWidth="150" 
+                        prefHeight="40"/>
+                <Button onAction="#handleSaveProduit" 
+                        styleClass="btn-primary" 
+                        text="Ajouter" 
+                        prefWidth="150" 
+                        prefHeight="40"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
