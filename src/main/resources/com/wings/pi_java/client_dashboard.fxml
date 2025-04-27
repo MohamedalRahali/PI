@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.ClientDashboardController"
+            stylesheets="@styles.css">
+
+    <top>
+        <HBox alignment="CENTER" 
+              style="-fx-background-color: #f8f9fa; -fx-padding: 20;">
+            <Label text="Boutique d'Artisanat" 
+                   styleClass="form-title" />
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="20" style="-fx-padding: 20;">
+            <!-- Liste des produits -->
+            <TableView fx:id="produitsTable">
+                <columns>
+                    <TableColumn fx:id="titreColumn" text="Titre" prefWidth="200"/>
+                    <TableColumn fx:id="prixColumn" text="Prix" prefWidth="100"/>
+                    <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="300"/>
+                </columns>
+            </TableView>
+
+            <!-- Informations du panier -->
+            <HBox spacing="20" alignment="CENTER_RIGHT">
+                <VBox spacing="10" alignment="CENTER_RIGHT">
+                    <HBox spacing="10" alignment="CENTER_RIGHT">
+                        <Label text="Nombre de produits :" />
+                        <Label fx:id="nombreProduitsLabel" text="0" />
+                    </HBox>
+                    <HBox spacing="10" alignment="CENTER_RIGHT">
+                        <Label text="Total :" />
+                        <Label fx:id="totalLabel" text="0.00 €" styleClass="total-label"/>
+                    </HBox>
+                </VBox>
+            </HBox>
+
+            <!-- Boutons d'action -->
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button text="Ajouter au panier" 
+                        styleClass="btn-primary" 
+                        onAction="#handleAjouterAuPanier"/>
+                <Button text="Voir le panier" 
+                        styleClass="btn-secondary" 
+                        onAction="#handleVoirPanier"/>
+            </HBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" 
+              style="-fx-padding: 20;">
+            <Button text="Déconnexion" 
+                    styleClass="btn-secondary" 
+                    onAction="#handleDeconnexion"/>
+        </HBox>
+    </bottom>
+
+</BorderPane> 

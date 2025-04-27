@@ -65,23 +65,23 @@ public class AIService {
     }
 
     private String callAIAPI(String prompt) throws Exception {
-        waitForRateLimit();
-        
-        URL url = new URL(API_URL);
+            waitForRateLimit();
+            
+            URL url = new URL(API_URL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setRequestProperty("Authorization", "Bearer " + API_KEY);
         conn.setDoOutput(true);
 
-        String jsonInputString = String.format(
-            "{\"model\": \"gpt-3.5-turbo\", \"messages\": [{\"role\": \"user\", \"content\": \"%s\"}]}",
-            URLEncoder.encode(prompt, StandardCharsets.UTF_8.toString())
-        );
+            String jsonInputString = String.format(
+                "{\"model\": \"gpt-3.5-turbo\", \"messages\": [{\"role\": \"user\", \"content\": \"%s\"}]}",
+                URLEncoder.encode(prompt, StandardCharsets.UTF_8.toString())
+            );
 
         try {
             conn.getOutputStream().write(jsonInputString.getBytes());
-            
+
             int responseCode = conn.getResponseCode();
             if (responseCode != 200) {
                 String errorMessage = "Erreur API OpenAI (code " + responseCode + ")";

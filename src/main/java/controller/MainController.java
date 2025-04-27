@@ -33,6 +33,11 @@ public class MainController {
         loadScene("/com/wings/pi_java/add_categorie.fxml", event);
     }
 
+    @FXML
+    private void navigateToPanier(ActionEvent event) throws IOException {
+        loadScene("/com/wings/pi_java/panier.fxml", event);
+    }
+
     private void loadScene(String fxmlPath, ActionEvent event) throws IOException {
         try {
             // Charge le FXML

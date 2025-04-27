@@ -17,6 +17,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.Node;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ManageProduitController {
 
@@ -33,6 +35,7 @@ public class ManageProduitController {
     private TableColumn<Produit, Void> actionsColumn;
 
     private final ProduitService produitService = new ProduitService();
+    private static final Map<Produit, Integer> panier = new HashMap<>();
 
     @FXML
     public void initialize() {
@@ -47,11 +50,13 @@ public class ManageProduitController {
         actionsColumn.setCellFactory(param -> new TableCell<Produit, Void>() {
             private final Button editButton = new Button("Modifier");
             private final Button deleteButton = new Button("Supprimer");
-            private final HBox buttons = new HBox(10, editButton, deleteButton);
+            private final Button addToCartButton = new Button("Ajouter au panier");
+            private final HBox buttons = new HBox(10, editButton, deleteButton, addToCartButton);
 
             {
                 editButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
                 deleteButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+                addToCartButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
 
                 editButton.setOnAction(event -> {
                     Produit produit = getTableView().getItems().get(getIndex());
@@ -67,6 +72,11 @@ public class ManageProduitController {
                     produitService.delete(produit);
                     refreshList();
                 });
+
+                addToCartButton.setOnAction(event -> {
+                    Produit produit = getTableView().getItems().get(getIndex());
+                    ajouterAuPanier(produit);
+                });
             }
 
             @Override
@@ -79,6 +89,23 @@ public class ManageProduitController {
                 }
             }
         });
+    }
+
+    private void ajouterAuPanier(Produit produit) {
+        panier.put(produit, panier.getOrDefault(produit, 0) + 1);
+        showAlert("Succès", "Produit ajouté au panier", Alert.AlertType.INFORMATION);
+    }
+
+    public static Map<Produit, Integer> getPanier() {
+        return panier;
+    }
+
+    private void showAlert(String title, String content, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     private void refreshList() {

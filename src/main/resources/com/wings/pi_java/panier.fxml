@@ -22,7 +22,7 @@
         <VBox spacing="20" 
               style="-fx-padding: 20;">
             <TableView fx:id="panierTable" 
-                      prefHeight="400">
+                      prefHeight="300">
                 <columns>
                     <TableColumn fx:id="titreColumn" 
                                text="Titre" 
@@ -30,24 +30,66 @@
                     <TableColumn fx:id="prixColumn" 
                                text="Prix" 
                                prefWidth="100"/>
+                    <TableColumn fx:id="quantiteColumn" 
+                               text="Quantité" 
+                               prefWidth="100"/>
                     <TableColumn fx:id="actionsColumn" 
                                text="Actions" 
                                prefWidth="150"/>
                 </columns>
             </TableView>
 
-            <HBox spacing="20" 
-                  alignment="CENTER_RIGHT">
-                <Label fx:id="totalLabel" 
-                       text="Total : 0.00€" 
-                       styleClass="total-label"/>
+            <VBox spacing="10">
+                <HBox spacing="20" alignment="CENTER_LEFT">
+                    <Label text="Nombre de produits :" />
+                    <Label fx:id="nombreProduitsLabel" text="0" />
+                </HBox>
                 
-                <Button text="Payer" 
-                        styleClass="btn-primary" 
-                        onAction="#handlePayer" 
-                        prefWidth="150"/>
-            </HBox>
+                <HBox spacing="20" alignment="CENTER_LEFT">
+                    <Label text="Réduction :" />
+                    <Label fx:id="reductionLabel" text="0.00 €" />
+                </HBox>
+                
+                <HBox spacing="20" alignment="CENTER_RIGHT">
+                    <Label fx:id="totalLabel" 
+                           text="Total : 0.00€" 
+                           styleClass="total-label"/>
+                </HBox>
+
+                <!-- Payment Form -->
+                <VBox spacing="10" style="-fx-padding: 20; -fx-background-color: #f8f9fa;">
+                    <Label text="Informations de paiement" styleClass="form-subtitle"/>
+                    
+                    <GridPane vgap="10" hgap="10">
+                        <Label text="Numéro de carte :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="numeroCarteField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        
+                        <Label text="Date d'expiration (MM/YY) :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextField fx:id="dateExpirationField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                        
+                        <Label text="Code de sécurité :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <TextField fx:id="codeSecuriteField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    </GridPane>
+                    
+                    <HBox alignment="CENTER_RIGHT" spacing="10">
+                        <Button text="Payer" 
+                                styleClass="btn-primary" 
+                                onAction="#handlePayer" 
+                                prefWidth="150"/>
+                    </HBox>
+                </VBox>
+            </VBox>
         </VBox>
     </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" 
+              style="-fx-padding: 20;">
+            <Button text="Retour" 
+                    styleClass="btn-secondary" 
+                    onAction="#handleBackToMain" 
+                    prefWidth="150"/>
+        </HBox>
+    </bottom>
 
 </BorderPane> 

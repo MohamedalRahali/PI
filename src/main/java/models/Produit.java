@@ -17,6 +17,7 @@ public class Produit {
     private Categorie categorie;
     private String image;
     private File imageFile;
+    private SimpleIntegerProperty quantite;
 
     // Constructeurs
     public Produit() {
@@ -26,6 +27,7 @@ public class Produit {
         this.artisteId = new SimpleIntegerProperty();
         this.prix = new SimpleDoubleProperty();
         this.statut = new SimpleStringProperty();
+        this.quantite = new SimpleIntegerProperty(0);
     }
 
     public Produit(String titre, String description, int artisteId, float prix, String statut, Date dateDeCreation, Categorie categorie, String image) {
@@ -37,6 +39,7 @@ public class Produit {
         this.dateDeCreation = dateDeCreation;
         this.categorie = categorie;
         this.image = image;
+        this.quantite = new SimpleIntegerProperty(0);
     }
 
     public Produit(int id, String titre, String description, int artisteId, float prix, String statut, Date dateCreation, Categorie categorie, String image) {
@@ -49,6 +52,7 @@ public class Produit {
         this.dateDeCreation = dateCreation;
         this.categorie = categorie;
         this.image = image;
+        this.quantite = new SimpleIntegerProperty(0);
     }
 
     // Getters et Setters
@@ -87,6 +91,10 @@ public class Produit {
 
     public File getImageFile() { return imageFile; }
     public void setImageFile(File imageFile) { this.imageFile = imageFile; }
+
+    public int getQuantite() { return quantite.get(); }
+    public void setQuantite(int quantite) { this.quantite.set(quantite); }
+    public SimpleIntegerProperty quantiteProperty() { return quantite; }
 
     @Override
     public String toString() {

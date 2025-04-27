@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import java.lang.String?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.AdminHomeController"
+            prefHeight="600.0" prefWidth="800.0"
+            style="-fx-background-color: linear-gradient(to bottom right, #2d1f17, #4d3428);">
+
+    <children>
+        <!-- Header with logo and title -->
+        <VBox alignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" spacing="10.0">
+            <!-- Logo -->
+            <ImageView fitHeight="80.0" fitWidth="80.0" preserveRatio="true">
+                <image>
+                    <Image url="@/images/art_logo.png"/>
+                </image>
+                <effect>
+                    <DropShadow color="#f9c89b" radius="10.0" spread="0.2"/>
+                </effect>
+            </ImageView>
+
+            <!-- Title -->
+            <Label text="👤 User Management Dashboard"
+                   style="-fx-text-fill: #f9c89b; -fx-padding: 10 0 20 0;">
+                <font>
+                    <Font name="Georgia Bold" size="32.0"/>
+                </font>
+                <effect>
+                    <DropShadow color="#00000080" radius="5.0" spread="0.1"/>
+                </effect>
+            </Label>
+        </VBox>
+
+        <!-- Action buttons -->
+        <VBox alignment="CENTER" spacing="25" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
+            <HBox alignment="CENTER" spacing="20" VBox.vgrow="ALWAYS">
+                <Button text="👥 View Users" onAction="#manageUsers"
+                        prefHeight="60.0" minWidth="250.0"
+                        styleClass="menu-button">
+                    <effect>
+                        <DropShadow color="#00000080" radius="8.0" spread="0.15"/>
+                    </effect>
+                </Button>
+
+                <Button text="✨ Create User" onAction="#createUser"
+                        prefHeight="60.0" minWidth="250.0"
+                        styleClass="menu-button">
+                    <effect>
+                        <DropShadow color="#00000080" radius="8.0" spread="0.15"/>
+                    </effect>
+                </Button>
+            </HBox>
+        </VBox>
+
+        <!-- Logout button -->
+        <Button text="🚪 Logout" onAction="#logout"
+                styleClass="menu-button"
+                AnchorPane.rightAnchor="20.0" AnchorPane.bottomAnchor="20.0">
+            <effect>
+                <DropShadow color="#00000080" radius="5.0" spread="0.1"/>
+            </effect>
+        </Button>
+
+        <!-- Footer -->
+        <Label AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="20.0" 
+               alignment="CENTER"
+               text="© 2025 Wings Solutions"
+               style="-fx-text-fill: #d3a27f; -fx-font-style: italic;">
+            <font>
+                <Font name="Georgia" size="14.0"/>
+            </font>
+        </Label>
+
+        <Label text="👑 Admin Dashboard" 
+               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;">
+            <font>
+                <Font name="Georgia Bold" size="32.0"/>
+            </font>
+        </Label>
+
+        <Label fx:id="userEmailLabel" 
+               style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-style: italic;"/>
+    </children>
+
+    <!-- Styles -->
+    <stylesheets>
+        <String fx:value="/style.css" />
+    </stylesheets>
+</AnchorPane>

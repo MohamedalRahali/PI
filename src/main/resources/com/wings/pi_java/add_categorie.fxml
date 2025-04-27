@@ -44,8 +44,8 @@
                GridPane.columnIndex="0" 
                        GridPane.rowIndex="2"/>
         <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="2">
-            <TextArea fx:id="descriptionField" 
-                     styleClass="form-field"
+        <TextArea fx:id="descriptionField" 
+                 styleClass="form-field"
                      prefWidth="300" 
                      prefHeight="100" />
             <Button fx:id="generateDescriptionButton" 
@@ -55,7 +55,7 @@
         </HBox>
                 <Label text="Entrez la description de la catégorie" 
                        styleClass="field-hint" 
-                       GridPane.columnIndex="1" 
+                 GridPane.columnIndex="1" 
                        GridPane.rowIndex="3"/>
     </GridPane>
 

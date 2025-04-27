@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.LoginController"
+            prefWidth="600" prefHeight="700" 
+            style="-fx-background-color: linear-gradient(to bottom right, #2d1f17, #4d3428);">
+    
+    <VBox alignment="CENTER" spacing="20" 
+          AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="30" 
+          AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="20">
+
+        <Label text="🔐 Login" 
+               style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: white;">
+            <effect>
+                <DropShadow color="#00000080" radius="5.0" spread="0.1"/>
+            </effect>
+        </Label>
+
+        <VBox spacing="15" alignment="CENTER" prefWidth="300">
+            <TextField fx:id="emailField" promptText="Email" 
+                   style="-fx-background-radius: 10; -fx-padding: 8; -fx-background-color: white; -fx-text-fill: black;"/>
+
+            <PasswordField fx:id="passwordField" promptText="Password"
+                      style="-fx-background-radius: 10; -fx-padding: 8; -fx-background-color: white; -fx-text-fill: black;"/>
+
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <CheckBox fx:id="rememberMeCheckbox" text="Remember me for 30 days" 
+                         style="-fx-text-fill: white;"/>
+            </HBox>
+
+            <Button text="Login" onAction="#login"
+                    style="-fx-background-color: #ff7043; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;">
+                <effect>
+                    <DropShadow color="#00000080" radius="5.0" spread="0.1"/>
+                </effect>
+            </Button>
+
+            <Button text="Forgot Password?" onAction="#onForgotPassword"
+                    style="-fx-background-color: transparent; -fx-text-fill: #ff7043; -fx-font-weight: bold;"/>
+
+            <Button text="Sign in with Google" onAction="#onGoogleSignIn"
+                    style="-fx-background-color: #4285f4; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;">
+                <graphic>
+                    <ImageView>
+                        <Image url="@../images/google_logo.png" requestedWidth="20" requestedHeight="20"/>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button text="Register" onAction="#goToRegister"
+                    style="-fx-background-color: #4d3428; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;">
+                <effect>
+                    <DropShadow color="#00000080" radius="5.0" spread="0.1"/>
+                </effect>
+            </Button>
+
+            <Button text="❌ Exit" onAction="#exit"
+                    style="-fx-background-color: #d32f2f; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;">
+                <effect>
+                    <DropShadow color="#00000080" radius="5.0" spread="0.1"/>
+                </effect>
+            </Button>
+        </VBox>
+    </VBox>
+</AnchorPane> 

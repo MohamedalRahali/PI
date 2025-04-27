@@ -1,13 +1,44 @@
 package Services;
 
 import models.Categorie;
-import util.MyConnection;
+import utils.MyConnection;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategorieService {
+
+    private Connection conn;
+
+    public CategorieService() {
+        conn = MyConnection.getInstance().getCnx();
+    }
+
+    public ObservableList<Categorie> getAllCategories() throws SQLException {
+        if (conn == null) {
+            throw new SQLException("La connexion à la base de données n'est pas établie");
+        }
+
+        ObservableList<Categorie> categories = FXCollections.observableArrayList();
+        String query = "SELECT * FROM categorie";
+        
+        try (PreparedStatement statement = conn.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+            
+            while (resultSet.next()) {
+                Categorie categorie = new Categorie();
+                categorie.setId(resultSet.getInt("id"));
+                categorie.setLibelle(resultSet.getString("libelle"));
+                categorie.setDescription(resultSet.getString("description"));
+                categories.add(categorie);
+            }
+        }
+        
+        return categories;
+    }
 
     public List<Categorie> getAll() {
         List<Categorie> categories = new ArrayList<>();

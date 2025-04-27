@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.collections.FXCollections?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.CreateUserController"
+            prefWidth="600" prefHeight="500" 
+            style="-fx-background-color: linear-gradient(to bottom right, #2d1f17, #4d3428);">
+    
+    <VBox alignment="CENTER" spacing="15" 
+          AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="30" 
+          AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="20">
+
+        <Label text="👤 Create New User" 
+               style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: white;">
+            <font>
+                <Font name="Georgia Bold" size="32.0"/>
+            </font>
+            <effect>
+                <DropShadow color="#00000080" radius="5.0" spread="0.1"/>
+            </effect>
+        </Label>
+
+        <GridPane hgap="10" vgap="10" alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints prefWidth="200"/>
+            </columnConstraints>
+            
+            <TextField fx:id="nameField" promptText="Name" GridPane.rowIndex="0"
+                   style="-fx-background-radius: 10; -fx-padding: 8; -fx-background-color: white; -fx-text-fill: black;"/>
+
+            <TextField fx:id="lastnameField" promptText="Lastname" GridPane.rowIndex="1"
+                   style="-fx-background-radius: 10; -fx-padding: 8; -fx-background-color: white; -fx-text-fill: black;"/>
+
+            <TextField fx:id="emailField" promptText="Email" GridPane.rowIndex="2"
+                   style="-fx-background-radius: 10; -fx-padding: 8; -fx-background-color: white; -fx-text-fill: black;"/>
+
+            <PasswordField fx:id="passwordField" promptText="Password" GridPane.rowIndex="3"
+                      style="-fx-background-radius: 10; -fx-padding: 8; -fx-background-color: white; -fx-text-fill: black;"/>
+
+            <ComboBox fx:id="roleComboBox" promptText="Select Role" GridPane.rowIndex="4"
+                      style="-fx-background-radius: 10; -fx-padding: 8; -fx-background-color: white; -fx-text-fill: black;">
+            </ComboBox>
+
+            <DatePicker fx:id="dateOfBirthPicker" GridPane.rowIndex="5"
+                   style="-fx-background-radius: 10; -fx-padding: 8; -fx-background-color: white; -fx-text-fill: black;"/>
+        </GridPane>
+
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="✅ Create User" onAction="#createUser"
+                    style="-fx-background-color: #ff7043; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;">
+                <effect>
+                    <DropShadow color="#00000080" radius="5.0" spread="0.1"/>
+                </effect>
+            </Button>
+            <Button text="🔙 Back to Home" onAction="#goBackToHome"
+                    style="-fx-background-color: #4d3428; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;">
+                <effect>
+                    <DropShadow color="#00000080" radius="5.0" spread="0.1"/>
+                </effect>
+            </Button>
+        </HBox>
+    </VBox>
+</AnchorPane>

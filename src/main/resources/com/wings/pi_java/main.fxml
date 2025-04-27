@@ -25,7 +25,7 @@
             <Button text="Produits" styleClass="nav-link" onAction="#navigateToManageProduit" prefWidth="150" prefHeight="40" style="-fx-font-size: 16px;">
                 <graphic>
                     <ImageView fitHeight="24" fitWidth="24">
-                        <Image url="@images/calendar.png" />
+                        <Image url="@images/list.png" />
                     </ImageView>
                 </graphic>
             </Button>
@@ -34,6 +34,14 @@
                 <graphic>
                     <ImageView fitHeight="24" fitWidth="24">
                         <Image url="@images/category.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button text="Panier" styleClass="nav-link" onAction="#navigateToPanier" prefWidth="150" prefHeight="40" style="-fx-font-size: 16px;">
+                <graphic>
+                    <ImageView fitHeight="24" fitWidth="24">
+                        <Image url="@images/cart.png" />
                     </ImageView>
                 </graphic>
             </Button>

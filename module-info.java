@@ -4,8 +4,7 @@ module pi.java {
     requires javafx.fxml;
     requires javafx.graphics;
     requires javafx.base;
-    requires jdk.httpserver;
-
+    requires java.mail;
     
     // Google API dependencies - temporarily commented out
     // requires com.google.api.client;

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.ArtistHomeController"
+            prefWidth="800" prefHeight="600" 
+            style="-fx-background-color: linear-gradient(to bottom right, #2d1f17, #4d3428);">
+    
+    <VBox alignment="CENTER" spacing="20" 
+          AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="30" 
+          AnchorPane.topAnchor="20" AnchorPane.bottomAnchor="20">
+
+        <Label text="🎨 Artist Dashboard" 
+               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;">
+            <font>
+                <Font name="Georgia Bold" size="32.0"/>
+            </font>
+        </Label>
+
+        <Label fx:id="userEmailLabel" 
+               style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-style: italic;"/>
+
+        <HBox spacing="20" alignment="CENTER">
+            <Button text="🎭 My Events" onAction="#viewMyEvents"
+                    style="-fx-background-color: #ff7043; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 15 30;"/>
+            <Button text="➕ Create Event" onAction="#createEvent"
+                    style="-fx-background-color: #ff7043; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 15 30;"/>
+        </HBox>
+
+        <Button fx:id="logoutButton" text="🔙 Logout" onAction="#logout"
+                style="-fx-background-color: #4d3428; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20;"/>
+    </VBox>
+</AnchorPane> 

@@ -21,13 +21,13 @@ import java.util.Optional;
 public class ManageCategorieController {
     @FXML
     private TableView<Categorie> categorieTable;
-    
+
     @FXML
     private TableColumn<Categorie, String> nomColumn;
     
     @FXML
     private TableColumn<Categorie, String> descriptionColumn;
-    
+
     @FXML
     private TableColumn<Categorie, Void> actionsColumn;
 
@@ -91,7 +91,7 @@ public class ManageCategorieController {
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+            }
     }
 
     private void handleEditCategorie(Categorie categorie) {

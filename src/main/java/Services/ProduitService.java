@@ -2,7 +2,9 @@ package Services;
 
 import models.Produit;
 import models.Categorie;
-import util.MyConnection;
+import utils.MyConnection;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 
 public class ProduitService {
 
-    Connection conn;
+    private Connection conn;
     private final AIService aiService = new AIService();
 
     public ProduitService() {
@@ -53,6 +55,42 @@ public class ProduitService {
         return produits;
     }
 
+    public ObservableList<Produit> getAllProduits() throws SQLException {
+        if (conn == null) {
+            throw new SQLException("La connexion à la base de données n'est pas établie");
+        }
+
+        ObservableList<Produit> produits = FXCollections.observableArrayList();
+        String query = "SELECT p.*, c.id as categorie_id, c.libelle as categorie_libelle " +
+                      "FROM produit p " +
+                      "LEFT JOIN categorie c ON p.categorie_id = c.id";
+        
+        try (PreparedStatement statement = conn.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+            
+            while (resultSet.next()) {
+                Produit produit = new Produit();
+                produit.setId(resultSet.getInt("id"));
+                produit.setTitre(resultSet.getString("titre"));
+                produit.setDescription(resultSet.getString("description"));
+                produit.setPrix(resultSet.getDouble("prix"));
+                produit.setImage(resultSet.getString("image"));
+                produit.setArtisteId(resultSet.getInt("artiste_id"));
+                produit.setStatut(resultSet.getString("statut"));
+                produit.setDateDeCreation(resultSet.getDate("date_creation"));
+                
+                // Créer et configurer la catégorie
+                Categorie categorie = new Categorie();
+                categorie.setId(resultSet.getInt("categorie_id"));
+                categorie.setLibelle(resultSet.getString("categorie_libelle"));
+                produit.setCategorie(categorie);
+                
+                produits.add(produit);
+            }
+        }
+        
+        return produits;
+    }
 
     // Ajouter ou mettre à jour un produit
     public void save(Produit produit) {
