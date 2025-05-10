@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\EventcateRepository;
+use App\Repository\TRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: EventcateRepository::class)]
-class Eventcate
+#[ORM\Entity(repositoryClass: TRepository::class)]
+class T
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,8 +19,8 @@ class Eventcate
     #[ORM\Column(length: 255)]
     private ?string $desc_event = null;
 
-    #[ORM\ManyToOne(inversedBy: 'eventcates')]
-    private ?event $relations = null;
+    #[ORM\ManyToOne(inversedBy: 'types')]
+    private ?Evenment $evenment = null;
 
     public function getId(): ?int
     {
@@ -35,7 +35,6 @@ class Eventcate
     public function setName(string $name): static
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -47,19 +46,17 @@ class Eventcate
     public function setDescEvent(string $desc_event): static
     {
         $this->desc_event = $desc_event;
-
         return $this;
     }
 
-    public function getRelations(): ?event
+    public function getEvenment(): ?Evenment
     {
-        return $this->relations;
+        return $this->evenment;
     }
 
-    public function setRelations(?event $relations): static
+    public function setEvenment(?Evenment $evenment): static
     {
-        $this->relations = $relations;
-
+        $this->evenment = $evenment;
         return $this;
     }
 }
